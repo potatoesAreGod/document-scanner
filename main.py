@@ -1,5 +1,6 @@
 from src.scan import scan_document
 from src.save import save_document
+from src.ocr import img_to_string
 from os import path
 
 debug = 1  # enables debugging output
@@ -19,3 +20,4 @@ if __name__ == "__main__":
         doc = scan_document("./images/demo.png", debug)
 
     save_document("document", filetype, save_path, doc)
+    img_to_string(doc)
