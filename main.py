@@ -1,23 +1,21 @@
 from src.scan import scan_document
 from src.save import save_document
 from src.ocr import img_to_string
-from os import path
+from os import getcwd
 
-debug = 1  # enables debugging output
-demo = 0  # auto-loads a demo image
+demo = 1  # auto-loads a demo image
 demo_img = "./images/demo.png"  # image to be used in the demo
 filetype = ".png"  # format to save as. leave empty to not save
-save_path = path.join(path.expanduser("~"), "Downloads")  # where to save scanned docs. defaults to user's downloads
-
-# TODO: Make use to the DEBUG var
-# TODO: OCR -> Editable document
-# TODO: Create a UI for dropping images (Web/Desktop/React(or is it electron?) -> convert to web+desktop)
+language = "en-US"  # what language to assume the doc is in
+try_to_guess_words = 1
+directory = getcwd()  # where to save files
 
 if __name__ == "__main__":
     if demo:
-        doc = scan_document(demo_img, 0)
+        doc = scan_document(demo_img)
     else:
-        doc = scan_document("./images/demo.png", debug)
+        img = input("Enter image to be scanned: ")
+        doc = scan_document(img)
 
-    save_document("document", filetype, save_path, doc)
-    img_to_string(doc)
+    content = img_to_string(doc, try_to_guess_words, language)
+    save_document("document", filetype, directory, content, doc)
